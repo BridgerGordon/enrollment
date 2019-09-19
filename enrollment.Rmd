@@ -1,0 +1,25 @@
+---
+title: "Enrollment"
+author: "Bridger Gordon"
+date: "9/17/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(readxl)
+library(tidyverse)
+library(knitr)
+```
+
+## What is the Largest English Class at Harvard?
+
+```{r}
+class_enrollment <- read_excel("raw-data/class_enrollment_summary_by_term_9.19.19.xlsx", skip = 3)
+class_enrollment %>%
+  filter(`Course Department` == "English") %>%
+  arrange(desc(Total)) %>%
+  select(`Course Title`, `Course Name`, `Total`) %>%
+  kable()
+
+```
