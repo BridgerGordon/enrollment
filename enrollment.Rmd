@@ -10,16 +10,36 @@ knitr::opts_chunk$set(echo = FALSE)
 library(readxl)
 library(tidyverse)
 library(knitr)
+library(janitor)
+
+
+
 ```
 
 ## What is the Largest English Class at Harvard?
 
 ```{r}
-class_enrollment <- read_excel("raw-data/class_enrollment_summary_by_term_9.19.19.xlsx", skip = 3)
+class_enrollment <- read_excel("raw-data/class_enrollment_summary_by_term_9.24.19.xlsx", skip = 3)
 class_enrollment %>%
-  filter(`Course Department` == "English") %>%
-  arrange(desc(Total)) %>%
-  select(`Course Title`, `Course Name`, `Total`) %>%
+  clean_names() %>%
+  filter(course_department == "English") %>%
+  arrange(desc(total)) %>%
+  select(course_title, course_name, total) %>%
+  head(5) %>%
+  kable()
+
+```
+
+## What is the Largest Gov Class at Harvard?
+
+```{r}
+class_enrollment <- read_excel("raw-data/class_enrollment_summary_by_term_9.24.19.xlsx", skip = 3)
+class_enrollment %>%
+  clean_names() %>%
+  filter(course_department == "Government") %>%
+  arrange(desc(total)) %>%
+  select(course_title, course_name, total) %>%
+  head(5) %>%
   kable()
 
 ```
